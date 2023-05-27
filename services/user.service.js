@@ -1,4 +1,5 @@
-const boom = require('@hapi/boom');
+const boom = require('@hapi/boom'); //libreria para validar los errores
+const bcrypt = require('bcrypt'); //libreria para encriptar las contraseña
 
 const { models } = require('./../libs/sequelize');
 
@@ -6,7 +7,12 @@ class UserService {
   constructor() {}
 
   async create(data) {
-    const newUser = await models.User.create(data);
+    const hash = await bcrypt.hash(data.password, 10); //encripta la contraseña
+    const newUser = await models.User.create({
+      ...data,
+      password: hash
+    });
+    delete newUser.dataValues.password; //con esta linea no nos retorna el hash del password
     return newUser;
   }
 
