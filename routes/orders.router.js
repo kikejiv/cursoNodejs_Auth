@@ -29,10 +29,10 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', {session: false}),
-  validatorHandler(createOrderSchema, 'body'),
+  //validatorHandler(createOrderSchema, 'body'),
   async (req, res, next) => {
     try {
-      const body = req.body;
+      const body = {userId: req.user.sub};// con esta linea me envia el usuario que ete logueado
       const newOrder = await service.create(body);
       res.status(201).json(newOrder);
     } catch (error) {
