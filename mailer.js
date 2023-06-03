@@ -1,3 +1,4 @@
+//codigo para envio de recuperar contraseña por email
 const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
